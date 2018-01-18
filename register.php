@@ -1,9 +1,12 @@
 <!DOCTYPE html>
-<?php require_once "cfg/config.php"; ?>
+<?php 
+    //require_once "cfg/config.php";
+    require_once "include/register.php";
+ ?>
 <html lang="en">
 <head>
     <?php
-    session_start();
+    // session_start();
     if(isset($_SESSION['username']) && $_SESSION['logged']) {
         header("Location: index.php");
     }
@@ -56,11 +59,16 @@
             <div id="legend">
                 <legend class="">Register</legend>
             </div>
+            <?
+                if($error) {
+                    echo '<p class="error-block">Registration couldnt complete because of an error, please try again</p>';
+                }
+            ?>
             <div class="control-group">
                 <!-- Username -->
                 <label class="control-label"  for="login">Login</label>
                 <div class="controls">
-                    <input type="text" id="login" name="login" placeholder="" class="input-xlarge">
+                    <input type="text" id="login" name="login" placeholder="" class="input-xlarge" required>
                     <p class="help-block">Username can contain any letters or numbers, without spaces</p>
                 </div>
             </div>
@@ -69,7 +77,7 @@
                 <!-- E-mail -->
                 <label class="control-label" for="email">E-mail</label>
                 <div class="controls">
-                    <input type="text" id="email" name="email" placeholder="" class="input-xlarge">
+                    <input type="text" id="email" name="email" placeholder="" class="input-xlarge" required>
                     <p class="help-block">Please provide your E-mail</p>
                 </div>
             </div>
@@ -78,7 +86,7 @@
                 <!-- Password-->
                 <label class="control-label" for="password">Password</label>
                 <div class="controls">
-                    <input type="password" id="password" name="password" placeholder="" class="input-xlarge">
+                    <input type="password" id="password" name="password" placeholder="" class="input-xlarge" required>
                     <p class="help-block">Password should be at least 4 characters</p>
                 </div>
             </div>
@@ -87,7 +95,7 @@
                 <!-- Password -->
                 <label class="control-label"  for="password_confirm">Password (Confirm)</label>
                 <div class="controls">
-                    <input type="password" id="password_confirm" name="password_confirm" placeholder="" class="input-xlarge">
+                    <input type="password" id="password_confirm" name="password_confirm" placeholder="" class="input-xlarge" required>
                     <p class="help-block">Please confirm password</p>
                 </div>
             </div>
@@ -96,7 +104,7 @@
                 <!-- E-mail -->
                 <label class="control-label" for="first">Imie</label>
                 <div class="controls">
-                    <input type="text" id="first" name="first" placeholder="" class="input-xlarge">
+                    <input type="text" id="first" name="first" placeholder="" class="input-xlarge" required>
                     <p class="help-block">Please provide your first name</p>
                 </div>
             </div>
@@ -105,7 +113,7 @@
                 <!-- E-mail -->
                 <label class="control-label" for="last">Nazwisko</label>
                 <div class="controls">
-                    <input type="text" id="last" name="last" placeholder="" class="input-xlarge">
+                    <input type="text" id="last" name="last" placeholder="" class="input-xlarge" required>
                     <p class="help-block">Please provide your last name</p>
                 </div>
             </div>
@@ -114,7 +122,7 @@
                 <!-- E-mail -->
                 <label class="control-label" for="age">Wiek</label>
                 <div class="controls">
-                    <input type="text" id="age" name="age" placeholder="" class="input-xlarge">
+                    <input type="text" id="age" name="age" placeholder="" class="input-xlarge" required>
                     <p class="help-block">Please provide your age</p>
                 </div>
             </div>
@@ -123,7 +131,7 @@
                 <!-- E-mail -->
                 <label class="control-label" for="region">Region</label>
                 <div class="controls">
-                    <input type="text" id="region" name="region" placeholder="" class="input-xlarge">
+                    <input type="text" id="region" name="region" placeholder="" class="input-xlarge" required>
                     <p class="help-block">Please provide your area</p>
                 </div>
             </div>
@@ -132,7 +140,7 @@
                 <!-- E-mail -->
                 <label class="control-label" for="city">Miasto</label>
                 <div class="controls">
-                    <input type="text" id="city" name="city" placeholder="" class="input-xlarge">
+                    <input type="text" id="city" name="city" placeholder="" class="input-xlarge" required>
                     <p class="help-block">Please provide your city</p>
                 </div>
             </div>
@@ -141,7 +149,7 @@
                 <!-- E-mail -->
                 <label class="control-label" for="country">Kraj</label>
                 <div class="controls">
-                    <input type="text" id="country" name="country" placeholder="" class="input-xlarge">
+                    <input type="text" id="country" name="country" placeholder="" class="input-xlarge" required>
                     <p class="help-block">Please provide your country</p>
                 </div>
             </div>

@@ -9,13 +9,16 @@
         $connect = new mysqli($host, $db_user, $db_password, $db_name);
         $connect->set_charset("utf8");
         $columns = $connect->query("SELECT * FROM users");
+        $num_of_rows = mysqli_num_rows($columns);
         if ($connect->connect_errno != 0) {
             echo "Error: " . $connect->connect_errno . "Opis: " . $connect->connect_error;
         }
-        for($i = 0; $i < 2; $i++) {
+        for($i = 1; $i < $num_of_rows; $i++) {
             $result = $connect->query("SELECT * FROM users WHERE user_id='$i'");
             $data = $result->fetch_assoc();
-            $username = $data["First"];
+            if($_SESSION['username'] == $data['Login']) {
+              $username = $data["First"];
+            }
 
         }
     } else {
@@ -51,6 +54,9 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
+              <a class="btn btn-success" href="post.php">Post</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="#"><? echo $username ?></a>
             </li>
             <li class="nav-item">
@@ -64,7 +70,12 @@
     <!-- Page Content -->
     <div class="container">
       <ul>
+        <li>
+          <?
+            $getRegions = $connect->query("SELECT * FROM regions");
+          ?>
 
+        </li>
     </ul>
     </div>
 

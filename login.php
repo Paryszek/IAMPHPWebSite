@@ -4,8 +4,12 @@
 <head>
     <?php
         session_start();
-        if(isset($_SESSION['username']) && $_SESSION['logged']) {
+        if (isset($_SESSION['username']) && $_SESSION['logged']) {
             header("Location: index.php");
+        }
+        $registrationCompleted = false;
+        if (isset($_GET['rejestracja']) && $_GET['rejestracja'] == "true") {
+            $registrationCompleted = true;
         }
     ?>
     <meta charset="utf-8">
@@ -51,14 +55,16 @@
 
 <!-- Page Content -->
 <div class="container">
+    <? if ($registrationCompleted) echo '<br /><p class="text-success">Rejestracja udana, zaloguj sie</p>' ?>
     <form action="include/login.php" method="POST">
         <div class="container">
+            <br />
             <label><b>Username</b></label>
             <input type="text" placeholder="Enter Username" name="username" required>
-
+            <br />
             <label><b>Password</b></label>
             <input type="password" placeholder="Enter Password" name="password" required>
-
+            <br />
             <button type="submit">Login</button>
         </div>
     </form>
