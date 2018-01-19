@@ -57,7 +57,7 @@
               <a class="btn btn-success" href="post.php">Post</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#"><? echo $username ?></a>
+              <a class="nav-link" href="#"><?php echo $username ?></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="include/logout.php">Logout</a>
@@ -71,7 +71,7 @@
     <div class="container">
       <ul>
         <li>
-          <?
+          <?php
             $getRegions = $connect->query("SELECT * FROM regions");
           ?>
 

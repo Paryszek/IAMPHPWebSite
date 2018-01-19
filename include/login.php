@@ -1,7 +1,8 @@
 <?php
     session_start();
+    $fmsg = "";
     require('../cfg/config.php');
-    if (isset($_SESSION['username']) && $_SESSION['logged']) {
+    if (isset($_SESSION['username']) || isset($_SESSION['logged'])) {
         header("Location: ../index.php");
     } else {
         if (isset($_POST['username']) and isset($_POST['password'])) {
@@ -18,8 +19,10 @@
                 $_SESSION['logged'] = true;
                 header("Location: ../index.php");
             } else {
-                $fmsg = "Invalid Login Credentials.";
+                header("Location: ../login.php?logowanie=false");
             }
+        } else {
+            header("Location: ../login.php?logowanie=false");
         }
     }
 ?>

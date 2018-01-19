@@ -7,7 +7,9 @@
         if (isset($_SESSION['username']) && $_SESSION['logged']) {
             header("Location: index.php");
         }
-        $registrationCompleted = false;
+        if(isset($_GET['logowanie']) && $_GET['logowanie'] == "false") {
+            $error = true;
+        }
         if (isset($_GET['rejestracja']) && $_GET['rejestracja'] == "true") {
             $registrationCompleted = true;
         }
@@ -55,7 +57,10 @@
 
 <!-- Page Content -->
 <div class="container">
-    <? if ($registrationCompleted) echo '<br /><p class="text-success">Rejestracja udana, zaloguj sie</p>' ?>
+    <?php
+        if (isset($registrationCompleted) && $registrationCompleted) echo '<br /><p class="text-success">Rejestracja udana, zaloguj sie</p>';
+        if (isset($error) && $error) echo '<br /><p class="text-danger">Logowanie nie udane, spróbuj ponownie</p>';
+    ?>
     <form action="include/login.php" method="POST">
         <div class="container">
             <br />

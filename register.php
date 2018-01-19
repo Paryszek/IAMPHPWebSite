@@ -56,10 +56,10 @@
 <div class="container">
     <form class="form-horizontal" action='include/register.php' method="POST">
         <fieldset>
-            <div id="legend">
+            <div id="legend" style="margin-top: 15px;">
                 <legend class="">Register</legend>
             </div>
-            <?
+            <?php
                 if($error) {
                     echo '<p class="error-block">Registration couldnt complete because of an error, please try again</p>';
                 }
@@ -155,7 +155,7 @@
             </div>
 
 
-            <div class="control-group">
+            <div class="control-group" style="margin-bottom: 15px;">
                 <!-- Button -->
                 <div class="controls">
                     <button class="btn btn-success">Register</button>
