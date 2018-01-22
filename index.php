@@ -59,42 +59,22 @@
     </nav>
 
     <!-- Page Content -->
-    <div class="container">
-      <ul>
-        <li>
+    <div class="container" style="margin-top:50px;">
           <?php
             $data = $connect->query("SELECT * FROM posts");
             $num_of_rows = mysqli_num_rows($data);
-            for($i = 0; $i < $num_of_rows; $i++) {
+            for($i = 1; $i-1 < $num_of_rows; $i++) {
                 $post_row = $connect->query("SELECT * FROM posts WHERE post_id='$i'");
                 $post = $post_row->fetch_assoc();
                 echo '
-                    <div id="postlist">
-                        <div class="panel">
-                            <div class="panel-heading">
-                                <div class="text-center">
-                                    <div class="row">
-                                        <div class="col-sm-9">
-                                            <h3 class="pull-left">Welcome</h3>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <h4 class="pull-right">
-                                            <small><em>2014-07-30<br>18:30:00</em></small>
-                                            </h4>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                        <div class="panel-body">
-                            '.$post["text"].'
-                        </div>
-                    </div>';
+                    <h2> '.$post["title"].' <span class="badge badge-secondary badge-success">New</span></h2>
+                    <p class="text-justify">
+                        '.$post["text"].'
+                    </p>
+                    <p class="text-justify">'.$post["date"].' by '.$post["author"].'</p>
+                ';
             }
           ?>
-
-        </li>
-    </ul>
     </div>
 
     <!-- /.container -->

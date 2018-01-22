@@ -26,7 +26,7 @@ if (isset($_POST['title']) and isset($_POST['message']) and isset($_POST['region
 
         $region_name = $data[$where];
         $author = $data["First"]." ".$data["Last"];
-        if($connect->query("INSERT INTO posts VALUES (DEFAULT, '$title', '$message', '$author', '$region_name', '$region_type', DEFAULT)")) {
+        if($connect->query("INSERT INTO posts VALUES (DEFAULT, '$title', '$message', '$author', '$region_name', '$region_type', DEFAULT, DEFAULT)")) {
             header("Location: ../post.php?success=true");
         } else {
             header("Location: ../post.php?success=false");
