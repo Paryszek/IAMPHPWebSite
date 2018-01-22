@@ -1,6 +1,5 @@
 <?php
     session_start();
-    $fmsg = "";
     require('../cfg/config.php');
     if (isset($_SESSION['username']) || isset($_SESSION['logged'])) {
         header("Location: ../index.php");

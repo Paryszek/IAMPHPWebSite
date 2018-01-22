@@ -2,29 +2,20 @@
 <?php require_once "cfg/config.php"; ?>
 <html lang="en">
   <head>
-  <?php
-    session_start();
-    if(isset($_SESSION['username']) && $_SESSION['logged']) {
-        $logged = $_SESSION['logged'];
-        $connect = new mysqli($host, $db_user, $db_password, $db_name);
-        $connect->set_charset("utf8");
-        $columns = $connect->query("SELECT * FROM users");
-        $num_of_rows = mysqli_num_rows($columns);
-        if ($connect->connect_errno != 0) {
-            echo "Error: " . $connect->connect_errno . "Opis: " . $connect->connect_error;
-        }
-        for($i = 1; $i < $num_of_rows; $i++) {
-            $result = $connect->query("SELECT * FROM users WHERE user_id='$i'");
-            $data = $result->fetch_assoc();
-            if($_SESSION['username'] == $data['Login']) {
-              $username = $data["First"];
-            }
-
-        }
-    } else {
-        header("Location: login.php");
-    }
-  ?>
+<?php
+  session_start();
+  if(isset($_SESSION['username']) && $_SESSION['logged']) {
+      $connect = new mysqli($host, $db_user, $db_password, $db_name);
+      $user = $_SESSION['username'];
+      $result = $connect->query("SELECT * FROM users WHERE Login='$user'");
+      $data = $result->fetch_assoc();
+      if($_SESSION['username'] == $data['Login']) {
+          $username = $data["First"]." ".$data["Last"];
+      }
+  } else {
+      header("Location: login.php");
+  }
+?>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -72,7 +63,34 @@
       <ul>
         <li>
           <?php
-            $getRegions = $connect->query("SELECT * FROM regions");
+            $data = $connect->query("SELECT * FROM posts");
+            $num_of_rows = mysqli_num_rows($data);
+            for($i = 0; $i < $num_of_rows; $i++) {
+                $post_row = $connect->query("SELECT * FROM posts WHERE post_id='$i'");
+                $post = $post_row->fetch_assoc();
+                echo '
+                    <div id="postlist">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <div class="text-center">
+                                    <div class="row">
+                                        <div class="col-sm-9">
+                                            <h3 class="pull-left">Welcome</h3>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <h4 class="pull-right">
+                                            <small><em>2014-07-30<br>18:30:00</em></small>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        <div class="panel-body">
+                            '.$post["text"].'
+                        </div>
+                    </div>';
+            }
           ?>
 
         </li>

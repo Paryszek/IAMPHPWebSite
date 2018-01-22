@@ -2,29 +2,20 @@
 <?php require_once "cfg/config.php"; ?>
 <html lang="en">
 <head>
-    <?php
+<?php
     session_start();
     if(isset($_SESSION['username']) && $_SESSION['logged']) {
-        $logged = $_SESSION['logged'];
         $connect = new mysqli($host, $db_user, $db_password, $db_name);
-        $connect->set_charset("utf8");
-        $columns = $connect->query("SELECT * FROM users");
-        $num_of_rows = mysqli_num_rows($columns);
-        if ($connect->connect_errno != 0) {
-            echo "Error: " . $connect->connect_errno . "Opis: " . $connect->connect_error;
-        }
-        for($i = 1; $i < $num_of_rows; $i++) {
-            $result = $connect->query("SELECT * FROM users WHERE user_id='$i'");
-            $data = $result->fetch_assoc();
-            if($_SESSION['username'] == $data['Login']) {
-                $username = $data["First"];
-            }
-
+        $user = $_SESSION['username'];
+        $result = $connect->query("SELECT * FROM users WHERE Login='$user'");
+        $data = $result->fetch_assoc();
+        if($_SESSION['username'] == $data['Login']) {
+            $username = $data["First"]." ".$data["Last"];
         }
     } else {
         header("Location: login.php");
     }
-    ?>
+?>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -76,12 +67,13 @@
             <input type="text" placeholder="Enter Title" name="title" required>
             <br />
             <label><b>Message</b></label><br />
-            <textarea class="form-control" rows="5" id="message"></textarea required>
+            <textarea class="form-control" rows="5" name="message"></textarea required>
             <br />
             <label for="sel1"><b>Where to post:</b></label>
-                <select class="form-control" id="sel1" required>
-                    <option>Your Region</option>
-                    <option>Your City</option>
+                <select class="form-control" name="region_type" required>
+                    <option value="1">Your Country</option>
+                    <option value="2">Your Region</option>
+                    <option value="3">Your City</option>
                 </select><br />
             <button class="btn btn-success" type="submit">Submit</button>
         </div>
