@@ -23,10 +23,10 @@ if (isset($_POST['title']) and isset($_POST['message']) and isset($_POST['region
         $getData = $connect->query("SELECT * FROM users WHERE Login = '$user'");
 
         $data = $getData->fetch_assoc();
-
+        $user_id = $data['user_id'];
         $region_name = $data[$where];
         $author = $data["First"]." ".$data["Last"];
-        if($connect->query("INSERT INTO posts VALUES (DEFAULT, '$title', '$message', '$author', '$region_name', '$region_type', DEFAULT, DEFAULT)")) {
+        if($connect->query("INSERT INTO posts VALUES (DEFAULT, '$title', '$message', '$author', '$region_name', '$region_type', DEFAULT, DEFAULT, '$user_id')")) {
             header("Location: ../post.php?success=true");
         } else {
             header("Location: ../post.php?success=false");

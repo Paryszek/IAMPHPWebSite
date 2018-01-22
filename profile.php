@@ -2,7 +2,7 @@
 <?php require_once "cfg/config.php"; ?>
 <html lang="en">
 <head>
-<?php
+    <?php
     session_start();
     if(isset($_SESSION['username']) && $_SESSION['logged']) {
         $connect = new mysqli($host, $db_user, $db_password, $db_name);
@@ -13,15 +13,10 @@
         if($_SESSION['username'] == $data['Login']) {
             $username = $data["First"]." ".$data["Last"];
         }
-        if (isset($_GET['success']) && $_GET['success'] == "true") {
-            $successPost = true;
-        } else if (isset($_GET['success']) && $_GET['success'] == "false"){
-            $successPost = false;
-        }
     } else {
         header("Location: login.php");
     }
-?>
+    ?>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -34,7 +29,16 @@
 
     <!-- Custom styles for this template -->
     <link href="css/logo-nav.css" rel="stylesheet">
+    <style>
+        a, a:hover {
+            color: black;
+            text-decoration: none; /* no underline */
+        }
+        a:hover {
+            color:#727b84;
+        }
 
+    </style>
 </head>
 
 <body>
@@ -65,29 +69,21 @@
 </nav>
 
 <!-- Page Content -->
-<div class="container">
-    <?php
-        if (isset($successPost) && $successPost) echo '<br /><p class="text-success">Gratulacje, post został utworzony</p>';
-        else if (isset($successPost) && !$successPost) echo '<br /><p class="text-danger">Wystąpił błąd, nie udało się utowrzyć posta</p>';
-    ?>
-    <form action="include/post.php" method="POST">
-        <div class="container">
-            <br />
-            <label><b>Title</b></label>
-            <input type="text" placeholder="Enter Title" name="title" required>
-            <br />
-            <label><b>Message</b></label><br />
-            <textarea class="form-control" rows="5" name="message"></textarea required>
-            <br />
-            <label for="sel1"><b>Where to post:</b></label>
-                <select class="form-control" name="region_type" required>
-                    <option value="1">Your Country</option>
-                    <option value="2">Your Region</option>
-                    <option value="3">Your City</option>
-                </select><br />
-            <button class="btn btn-success" type="submit">Submit</button>
-        </div>
-    </form>
+<div class="container" style="margin-top:50px;">
+<?php
+    if(isset($_GET['user_id'])) {
+        $i = $_GET['user_id'];
+        $data = $connect->query("SELECT * FROM posts");
+        $num_of_rows = mysqli_num_rows($data);
+        $data_row = $connect->query("SELECT * FROM users WHERE user_id='$i'");
+        $user = $data_row->fetch_assoc();
+        echo '<h2>' . $user["First"] . ' ' . $user["Last"] . '</h2>
+            <p class="text-justify">Age: ' . $user["Age"] . '</p>
+            <p class="text-justify">Country: ' . $user["Country"] . '</p>
+            <p class="text-justify">Region: ' . $user["Region"] . '</p>
+            <p class="text-justify">City: ' . $user["City"] . '</p>';
+    }
+?>
 </div>
 
 <!-- /.container -->
