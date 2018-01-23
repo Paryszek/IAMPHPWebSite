@@ -70,6 +70,8 @@
 
     <!-- Page Content -->
     <div class="container" style="margin-top:50px;">
+      <?php if (isset($_GET['delete']) && $_GET['delete'] == "true") echo '<br /><p class="text-success">Gratulacje, Post został usunięty</p>';
+            else if (isset($_GET['delete']) && $_GET['delete'] == "false") echo '<br /><p class="text-danger">Wystąpił błąd, nie udało się usunac posta</p>'; ?>
         <h6>Filter posts:</h6>
         <form action="index.php" method="POST">
             <select class="form-control" name="filter_region" required>
@@ -102,34 +104,37 @@
                 }
             }
 
-            for ($i = $num_of_rows; $i != 0; $i--) {
                 if(isset($region) and $region) {
-                    $post_row = $connect->query("SELECT * FROM posts WHERE post_id='$i' AND region_name='$data[$region]'");
+                    $post_row = $connect->query("SELECT * FROM posts WHERE region_name='$data[$region]'");
                 } else {
-                    $post_row = $connect->query("SELECT * FROM posts WHERE post_id='$i'");
+                    $post_row = $connect->query("SELECT * FROM posts");
+                  
                 }
 
-                $post = $post_row->fetch_assoc();
-                if(isset($post)) {
-                    echo '<h2><a href="view.php?post_id=' . $i . '">' . $post["title"];
-                    $post_date = new DateTime($post["date"]);
-                    $post_date->format('Y\-m\-d\ h-i-s');
-                    $diff = $post_date->diff(new DateTime());
-                    $hours = $diff->h;
-                    if ($hours < 2) {
-                        echo ' <span class="badge badge-secondary badge-success">New</span>';
-                    }
-                    echo '
-                        </a></h2>
-                        <h6>' . $post['region_name'] . '</h6>
-                        <p class="text-justify">
-                            ' . $post["text"] . '
-                        </p>
-                        <p class="text-justify">' . $post["date"] . ' by <a href="profile.php?user_id=' . $post["user_id"] . '">' . $post["author"] . '</a></p>
-                    ';
+                // $allRows = mysql_num_rows($post_row);
+                // $i = $allRows
+                while($post = $post_row->fetch_assoc()) {
+                  if(isset($post)) {
+                      echo '<h2><a href="view.php?post_id=' . $post['post_id'] . '">' . $post["title"];
+                      $post_date = new DateTime($post["date"]);
+                      $post_date->format('Y\-m\-d\ h-i-s');
+                      $diff = $post_date->diff(new DateTime());
+                      $hours = $diff->h;
+                      if ($hours < 2) {
+                          echo ' <span class="badge badge-secondary badge-success">New</span>';
+                      }
+                      echo '
+                          </a></h2>
+                          <h6>' . $post['region_name'] . '</h6>
+                          <p class="text-justify">
+                              ' . $post["text"] . '
+                          </p>
+                          <p class="text-justify">' . $post["date"] . ' by <a href="profile.php?user_id=' . $post["user_id"] . '">' . $post["author"] . '</a></p>
+                      ';
+                  }
                 }
 
-            }
+            
           ?>
     </div>
 

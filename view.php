@@ -87,7 +87,15 @@
         if ($hours < 2) {
             echo ' <span class="badge badge-secondary badge-success">New</span>';
         }
-        echo '</h2>
+        echo '</h2>';
+            if($data['user_id'] == $post['user_id']) {
+                echo '
+                <form style="margin-top:15px; margin-bottom:15px;" action = "include/delete.php" method="POST">
+                    <input type="hidden" name="post_id" value="' . $i . '" hidden>
+                    <button class="btn btn-danger" type = "submit" >Delete</button >
+                </form >';
+            }
+            echo '
             <h6>'.$post['region_name'].'</h6>
             <p class="text-justify">' . $post["text"] . '</p>
             <p class="text-justify">' . $post["date"] . ' by <a href="profile.php?user_id=' . $post["user_id"] . '">' . $post["author"] . '</a></p>';
